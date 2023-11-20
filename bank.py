@@ -15,13 +15,27 @@ class Account(User):
         self.balance = balance
     
     def deposit(self):
-        dp = float(input('How much would you like to deposit? '))
+        try:
+            dp = float(input('How much would you like to deposit? '))
+        except ValueError:
+            return "Please enter a valid amount."
+        
+        if dp <= 0:
+            return "Invalid amount. Deposit amount should be a positive number."
+        
         self.balance += dp
         self.total_deposits += 1
         return f"Deposit successful!! The balance is now ${self.balance}"
     
     def withdraw(self):
-        wd = float(input('How much do you want to withdraw? '))
+        try:
+            wd = float(input('How much do you want to withdraw? '))
+        except ValueError:
+            return "Please enter a valid amount."
+        
+        if wd <= 0:
+            return "Invalid amount. Withdrawal amount should be a positive number."
+        
         if wd > self.balance:
             return f"You do not have enough money to withdraw ${wd}, your balance is ${self.balance}"
         self.balance -= wd
@@ -42,7 +56,14 @@ class Savings(Account):
         return f"Interest added! Your current balance is ${self.balance}"
     
     def withdraw(self):
-        wd = float(input('How much do you want to withdraw? '))
+        try:
+            wd = float(input('How much do you want to withdraw? '))
+        except ValueError:
+            return "Please enter a valid amount."
+        
+        if wd <= 0:
+            return "Invalid amount. Withdrawal amount should be a positive number."
+        
         if self.withdrawals_this_month >= self.max_withdrawals_per_month:
             return f"You have reached your maximum number of withdrawals for the month."
         if wd > self.balance:
@@ -60,7 +81,14 @@ class Checking(Account):
         super().__init__(name, age, balance)
     
     def withdraw(self):
-        wd = float(input('How much do you want to withdraw? '))
+        try:
+            wd = float(input('How much do you want to withdraw? '))
+        except ValueError:
+            return "Please enter a valid amount."
+        
+        if wd <= 0:
+            return "Invalid amount. Withdrawal amount should be a positive number."
+        
         if wd > (self.balance + abs(self.overdraft_limit)):
             return f"You have exceeded your overdraft limit. Your current balance is ${self.balance} and your overdraft limit is ${self.overdraft_limit}"
         if wd > self.balance:
