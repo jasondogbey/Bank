@@ -1,11 +1,14 @@
+# Define a User class representing bank customers
 class User:
     def __init__(self, name, age):
         self.name = name
         self.age = age
     
+    # Return formatted user details
     def show_details(self):
-        return f"{self.name.title()}, {self.age}"
+        return f"{self.name.title()}, {self.age} years old"
 
+# Define an Account class as a base class for bank accounts
 class Account(User):
     total_deposits = 0
     total_withdrawals = 0
@@ -14,6 +17,7 @@ class Account(User):
         super().__init__(name, age)
         self.balance = balance
     
+    # Method to deposit money into the account
     def deposit(self):
         try:
             dp = float(input('How much would you like to deposit? '))
@@ -100,7 +104,7 @@ class Checking(Account):
         self.total_withdrawals += 1
         return f"${wd} withdrawn! Your current balance is ${self.balance}"
 
-# Function to create a new account
+# Create an account based on the provided account type
 def create_account(account_type, name, age, deposit):
     if account_type == 'S':
         return Savings(name, age, deposit)
@@ -114,6 +118,7 @@ def display_accounts(accounts):
     for idx, account in enumerate(accounts, start=1):
         print(f"{idx}. {type(account).__name__} - Balance: ${account.balance}")
 
+# Main function to handle user interactions, account creation, and operations
 def manage_accounts():
     accounts = []  # List to store created accounts
 
@@ -163,5 +168,5 @@ def manage_accounts():
             else:
                 print('Please enter a number between 1-6')
 
-# Run the program
+# Run the program by calling the main function
 manage_accounts()
