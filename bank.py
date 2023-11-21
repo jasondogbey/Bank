@@ -109,54 +109,59 @@ def create_account(account_type, name, age, deposit):
     else:
         return None
 
-accounts = []  # List to store created accounts
+# Function to display account details
+def display_accounts(accounts):
+    for idx, account in enumerate(accounts, start=1):
+        print(f"{idx}. {type(account).__name__} - Balance: ${account.balance}")
 
-print('Welcome to ABC Bank')
-name = input('What is your name? ')
-age = int(input('What is your age? '))
+def manage_accounts():
+    accounts = []  # List to store created accounts
 
-while True:
-    deposit = float(input('How much do you have to start? '))
-    account_type = input('What type of account do you want to create? Enter S for savings, C for checking: ').upper()
-
-    user_account = create_account(account_type, name, age, deposit)
-    if user_account:
-        accounts.append(user_account)
-    else:
-        print('Invalid input. Please enter S or C.')
+    print('Welcome to ABC Bank')
+    name = input('What is your name? ')
+    age = int(input('What is your age? '))
 
     while True:
-        print(f"""
-            Welcome to ABC Bank {name, age}
-            1. Check account balance
-            2. Deposit
-            3. Withdraw
-            4. Switch account
-            5. End
-            6. Create another account
-        """)
-        user_input = input('> ')
-        if user_input == '1':
-            for idx, account in enumerate(accounts, start=1):
-                print(f"{idx}. {type(account).__name__} - Balance: ${account.balance}")
-        elif user_input == '2':
-            # amount = float(input('Enter deposit amount: '))
-            print(user_account.deposit())
-        elif user_input == '3':
-            # amount = float(input('Enter withdrawal amount: '))
-            print(user_account.withdraw())
-        elif user_input == '4':
-            print("Available accounts:")
-            for idx, account in enumerate(accounts, start=1):
-                print(f"{idx}. {type(account).__name__} - Balance: ${account.balance}")
-            account_choice = int(input("Enter the account number to switch: "))
-            if 0 < account_choice <= len(accounts):
-                user_account = accounts[account_choice - 1]
-            else:
-                print("Invalid account number.")
-        elif user_input == '5':
-            exit()  # Exit the program
-        elif user_input == '6':
-            break  # Create another account
+        deposit = float(input('How much do you have to start? '))
+        account_type = input('What type of account do you want to create? Enter S for savings, C for checking: ').upper()
+
+        user_account = create_account(account_type, name, age, deposit)
+        if user_account:
+            accounts.append(user_account)
         else:
-            print('Please enter a number between 1-6')
+            print('Invalid input. Please enter S or C.')
+
+        while True:
+            print(f"""
+                Welcome to ABC Bank {name, age}
+                1. Check account balance
+                2. Deposit
+                3. Withdraw
+                4. Switch account
+                5. End
+                6. Create another account
+            """)
+            user_input = input('> ')
+            if user_input == '1':
+                display_accounts(accounts)
+            elif user_input == '2':
+                print(user_account.deposit())
+            elif user_input == '3':
+                print(user_account.withdraw())
+            elif user_input == '4':
+                print("Available accounts:")
+                display_accounts(accounts)
+                account_choice = int(input("Enter the account number to switch: "))
+                if 0 < account_choice <= len(accounts):
+                    user_account = accounts[account_choice - 1]
+                else:
+                    print("Invalid account number.")
+            elif user_input == '5':
+                exit()  # Exit the program
+            elif user_input == '6':
+                break  # Create another account
+            else:
+                print('Please enter a number between 1-6')
+
+# Run the program
+manage_accounts()
