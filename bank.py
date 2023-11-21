@@ -100,7 +100,38 @@ class Checking(Account):
         self.total_withdrawals += 1
         return f"${wd} withdrawn! Your current balance is ${self.balance}"
 
-user1 = Checking('capi', 30, 50)
-print(user1.show_details(), 'welcome')
-print(user1.withdraw())
-print(user1.withdraw())
+
+print('Welcome to ABC Bank')
+name = input('What is your name? ')
+age = int(input('What is your age? '))
+deposit = float(input('How much do you have to start? '))
+while True:
+    account_type = input('What type of account do you want to create? Enter S for savings, C for checking: ').upper()
+    if account_type == 'S':
+        user = Savings(name, age, deposit)
+        break
+    elif account_type == 'C':
+        user = Checking(name, age, deposit)
+        break
+    else:
+        print('Invalid input. Please enter S or C')
+
+while True:
+    print(f"""
+        Welcome to ABC Bank {name, age}
+        1. Check account balance
+        2. Deposit
+        3. Withdraw
+        4. End
+    """)
+    user_input = input('> ')
+    if user_input == '1':
+        print(f"Your current balance is ${user.balance}")
+    elif user_input == '2':
+        print(user.deposit())
+    elif user_input == '3':
+        print(user.withdraw())
+    elif user_input == '4':
+        break
+    else:
+        print('Please enter a number between 1-4')
